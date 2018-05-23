@@ -12,9 +12,6 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
 	 crossorigin="anonymous">
 	<link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
-
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
 	<!-- Our Custom CSS -->
 	<link rel="stylesheet" href="style.css">
 
@@ -27,7 +24,6 @@
 </head>
 
 <body>
-
 
 
 	<div class="container-fluid">
@@ -143,19 +139,12 @@
 	<script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
+
 		$(document).ready(function () {
-
-			$("$chart").click(function(e){
-				e.preventDefault();
-				alert(1);
-				$('#realContent').load('dtable.html');
-			});
-
-			$('#example').DataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					'copy', 'csv', 'excel', 'pdf', 'print'
-				]
+			
+			$("#chart").click(function(e){
+				$()
+				$('#realContent').load('dtable/dtable.html');
 			});
 		});
 	</script>
