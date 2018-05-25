@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Journal</title>
+        <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
+    </head>
+
+    <body onload="create_journal()">
+        <div id="journal_div"></div>
+        
+        <script>
+            var journal="";
+
+            journal="<table class='table table-hover'>";
+
+            journal+="<thead>";
+            journal+="<th>Number</th>";
+            journal+="<th>Type</th>";
+            journal+="<th>Sub-type</th>";
+            journal+="<th>GL Account</th>";
+            journal+="<th>Description</th>";
+            journal+="<th>Debit</th>";
+            journal+="<th>Credit</th>";
+            joutnal+="</thead>";
+
+            journal+="<tbody>";
+            journal+="<tr>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="</tr>";
+
+            journal+="<tr>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="<td></td>";
+            journal+="</tr>";
+            journal+="</tbody>"
+
+            journal+="</table>";
+                
+            function create_journal(){
+                
+                document.getElementById("journal_div").innerHTML=journal;
+            }
+        </script>
+    </body>
+</html>
