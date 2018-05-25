@@ -1,55 +1,44 @@
 <html>
     <head>
         <title>Journal</title>
-        <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../bootstrap-3.3.7/dist/css/bootstrap.min.css">
     </head>
 
     <body onload="create_journal()">
         <div id="journal_div"></div>
         
         <script>
-            var journal="";
+            
+            function create_journal(row, col, head, data){
+                var journal="";
 
-            journal="<table class='table table-hover'>";
+                journal = "<table class='table table-hover'>";
 
-            journal+="<thead>";
-            journal+="<th>Number</th>";
-            journal+="<th>Type</th>";
-            journal+="<th>Sub-type</th>";
-            journal+="<th>GL Account</th>";
-            journal+="<th>Description</th>";
-            journal+="<th>Debit</th>";
-            journal+="<th>Credit</th>";
-            joutnal+="</thead>";
+                journal += "<thead>";
+                journal += "<tr>";
+                for(i=0; i<col; i++){
+                    journal+="<th>"+head[i]+"</th>";
+                }//for head
+                journal="</tr>";
 
-            journal+="<tbody>";
-            journal+="<tr>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="</tr>";
+                journal += "<tbody>";
+                for(i=0; i<row; i++){
+                    journal += "<tr>";
+                    for (i = 0; i < cols; i++) {
+                        journal += "<td>" + data[row][col] + "</td>";
+                    }//for col
+                    journal += "</tr>";
+                }//for row
+                journal += "</tbody>"
 
-            journal+="<tr>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="<td></td>";
-            journal+="</tr>";
-            journal+="</tbody>"
+                journal += "</table>";
+                return journal;
+            }//create_journal()
 
-            journal+="</table>";
-                
-            function create_journal(){
-                
+            function show_journal(){
+                journal=create_journal(10, 6, head, data);
                 document.getElementById("journal_div").innerHTML=journal;
-            }
+            }//show_journal()
         </script>
     </body>
 </html>
