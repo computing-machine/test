@@ -1,0 +1,11 @@
+{
+		"Asset":{
+			"Current":["Receiveables", "Cash"],
+			"Long-term":["Equipment", "Land"]
+		},
+		
+		"Liability":{
+			"Current":["wages payables", "bills payables"],
+			"Long-term":["bank loan", "mortage"]
+		}
+}

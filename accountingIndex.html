@@ -56,7 +56,7 @@
 								</ul>
 							</li>
 							<li>
-								<a aria-expanded="false">
+								<a id="journal" aria-expanded="false">
 									<b>General Journel</b>
 								</a>
 							</li>
@@ -149,8 +149,11 @@
 		$(document).ready(function () {
 
 			$("#chart").click(function (e) {
-				document.getElementById("realContent").innerHTML="<div id='dtable' style='height:100%;'></div>";
-				document.getElementById("dtable").innerHTML='<object type="text/html" data="dtable/dtable.html" style="height:600px; width:100%;" ></object>';
+				document.getElementById("realContent").innerHTML='<object type="text/html" data="dtable/dtable.html" style="height:600px; width:100%;" ></object>';
+			});
+
+			$("#journal").click(function (e) {
+				document.getElementById("realContent").innerHTML='<object type="text/html" data="journal/journal.html" style="height:600px; width:100%;" ></object>';
 			});
 		});
 	</script>
