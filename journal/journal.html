@@ -14,7 +14,7 @@
             function create_journal(row, col, head, data){
                 var journal="";
 
-                journal = "<table class='table table-hover'>";
+                journal = "<table id='journal' class='table table-hover'>";
 
                 journal += "<thead>";
                 journal += "<tr>";
@@ -41,11 +41,35 @@
                 return journal;
             }//create_journal()
 
+            function create_button(func, val){
+                var button="";
+                button="<button onclick="+func+" class='btn btn-primary'>"+val+"</button>";
+                return button;
+            }//create_button()
+
+            function create_row(journal, col) {
+                    row = journal.insertRow(-1);
+                    td = "";
+                    td += "<td><input type='text'></td>";
+                    for (j = 3; j < col; j++) {
+                        td += "<td><select><option disabled selected value> -- select an option -- </option></select></td>";
+                    }//for col
+                    for (k = 0; k < 2; k++) {
+                        td += "<td><input type='text'></td>";
+                    }//for debit
+                    row.innerHTML=td;
+                }//create_row
+
             function show_journal(){
-                $.getJSON("database.json", function(data) {
+                $.getJSON("database.json", {},function(data) {
+                    alert(data);
                     head=["Number", "Type", "Sub-type", "GL Account", "Debit", "Credit"];
+                    html="";
                     journal=create_journal(2, 6, head, data);
-                    document.getElementById("journal_div").innerHTML=journal;
+                    add_row_button=create_button("'create_row(document.getElementById(\"journal\"), 6)'", "More");
+                    post_button=create_button("'post_entries(document.getElementById(\"journal\"))'", "Post");
+                    html=journal+add_row_button+post_button;
+                    document.getElementById("journal_div").innerHTML=html;
                 });
             }//show_journal()
         </script>
