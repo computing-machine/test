@@ -1,1 +1,10 @@
-{["a":3]}
+{"database":{
+		"Asset":{"Current":[{"id":1, "title":"Recievables"},{"id":2, "title":"Cash"}],
+			"Long-term":[{"id":3, "title":"Equipment"},{"id":4, "title":"Land"}]
+			},
+		
+		"Liability":{"Current":[{"id":5, "title":"Payables"},{"id":6, "title":"Urnearned revenue"}],
+			"Long-term":[{"id":7, "title":"Bank loan"},{"id":8, "title":"Mortage"}]
+			}
+	}
+}
