@@ -34,14 +34,25 @@
                 journal += "<tbody>";
                 //accont types
                 acc_type_list=Object.keys(data);
-                //account subtypes
+                //accounts list
+                var arr=[];
+                for(a=0; a<acc_type_list.length; a++){
+                    subtype_list = Object.keys(data[acc_type_list[a]]);
+                    arr[a] = [subtype_list.length];
+                    for (b = 0; b < subtype_list.length; b++) {
+                        accounts_list=data[acc_type_list[a]][subtype_list[b]].length;
+                        arr[a][b]=[accounts_list];
+                        for(c=0; c<accounts_list; c++){
+                            arr[a][b][c]=data[acc_type_list[a]][subtype_list[b]][c];
+                        }//for
+                    }//for outer
+                }//outer for*/
+                size(arr.length);
                 asset_subtype_list=Object.keys(data["Asset"]);
                 liability_subtype_list=Object.keys(data["Liability"]);
                 unknown_subtype_list=Object.keys(data["Unknown"]);
                 revenue_subtype_list=Object.keys(data["Revenue"]);
                 expense_subtype_list=Object.keys(data["Expense"]);
-                //accounts
-                asset_accounts_list=[];
 
                 //creating journal
                 for(i=0; i<row; i++){
