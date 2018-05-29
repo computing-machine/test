@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>Purchase Management</title>
+
+         <!-- CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../bootstrap/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!--  CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- JQuery Library -->
+        <script  src="../jquery/jquery-3.3.1.js"></script>
+        <script   src="../bootstrap/bootstrap-3.3.7/js/dropdown.js"></script>
+        <script   src="../bootstrap/bootstrap-3.3.7/js/collapse.js"></script>
+        <script    src="../bootstrap/bootstrap-3.3.7/js/modal.js"></script>
+        </head>
+        <body>
+
+
+
+        <div class="wrapper" >
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Purchaser</h3>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#vendorMenu" data-toggle="collapse" aria-expanded="false">Vendors</a>
+                        <ul class="collapse list-unstyled" id="vendorMenu">
+                            <li id ="addVendorbtn"><a href="#" >Add vendor</a></li>
+                            <li><a href="#">View Vendor</a></li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                        <a href="#purchaseMenu" data-toggle="collapse" aria-expanded="false">Purchase</a>
+                        <ul class="collapse list-unstyled" id="purchaseMenu">
+                            <li><a href="#">Add Purchase</a></li>
+                            <li><a href="#">Purchase History</a></li>
+                            <li><a href="#">Bills from Vendors</a></li>
+                            <li><a href="#">Pay bill of a Purchase</a></li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                       <a href="#reportsMenu" data-toggle="collapse" aria-expanded="false">Reports</a>
+                        <ul class="collapse list-unstyled" id="reportsMenu">
+                            <li><a href="#">Active Purchase orders</a></li>
+                            <li><a href="#">Recieved History </a></li>
+                            <li><a href="#">Purchases by vendors</a></li>
+                            <li><a href="#">Payments made</a></li>
+                            <li><a href="#">Vendors Balances</a></li>
+                        </ul>
+                    </li>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+                    <div class = "row">
+                            <div class = "col-lg-12" >
+    
+            
+
+                <div class="col-md-8 col-md-offset-1 col-lg-12 hide" id="addVendor" style="background-color:white; margin-top:15px">
+                    <form style="padding:2px">
+                        <div class="form-group">
+                          <label for="name">Enter Name:</label>
+                          <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                          <label for="company">Company:</label>
+                          <input type="text" class="form-control" id="company">
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="contact">ContactNo:</label>
+                                <input rows="4" class="form-control" id="contact"/>
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="deliveryadd">Address:</label>
+                                <textarea rows="4" class="form-control" id="deliveryadd"></textarea>
+                        </div>
+
+                        <button id="submitreg" type="button" class="btn btn-primary">ADD Vendor</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+     </div> 
+</div>
+        
+
+        
+
+
+
+
+
+        <!-- jQuery CDN -->
+         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+         <!-- Bootstrap Js CDN -->
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <script>
+            $(document).ready(function(){
+                $('#logo').html("<h3><b>Register Purchase</b></h3>");
+                
+                
+                //SEARCH Vendor
+                
+                $('#searchvenbtn').click(function(){
+                    $('#searchven').removeClass('hide');
+                    $('#searchven').show();
+                    $('#registerVen').hide();
+                                $('#sarchpro').hide();
+                    $('#logo').html('<b>Show Vendor</b>');
+                });
+                
+                $('#venname').keyup(function(){
+                    $('#tbname').removeClass('hide');
+                    $('#tbname').show();
+        
+                });
+                
+                $('#td1').click(function(){
+                    $('#venname').val('marium');
+                    $('#tbcompany').removeClass('hide');
+                    $('#tbcompany').show();
+                });
+                
+                $('#td11').click(function(){
+                    $('#tbcontact').removeClass('hide');
+                    $('#tbcontact').show();
+                    $('#vencompany').val('Google');
+                    
+                });
+                
+                $('#td21').click(function(){
+                    $('#venphone').val('1234');
+                    $('#searchpro').removeClass('hide');
+                    $('#searchpro').show();
+                    
+                });
+                
+            
+                
+                $('#td11').click(function(){
+                    $('#vencompany').html('google');
+                    
+                });
+                
+                //ADD Vendor
+                
+                $('#addVendorbtn').click(function(){
+                    $('#addVendor').removeClass("hide");
+                    $('#addVendor').show();
+                    
+                });
+                
+                $('#submitreg').click(function(){
+                    $('#searchpro').removeClass('hide');
+                    $('#searchpro').show();
+                                
+                });
+                
+                $('#searchprobtn').click(function(){
+                    $('#sarchpro').removeClass('hide');
+                    $('#sarchpro').show();
+                    $('#registerVen').hide();
+                    $('#searchven').hide();
+                                $('#logo').html('<b>Search products</b>');
+                    
+                });
+                
+            });
+        </script>
+
+         <script type="text/javascript">
+             $(document).ready(function () {
+                 $('#sidebarCollapse').on('click', function () {
+                     $('#sidebar').toggleClass('active');
+                 });
+             });
+         </script>
+    </body>
+</html>
