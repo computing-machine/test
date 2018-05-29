@@ -25,11 +25,22 @@
                 journal+="</thead>";
 
                 journal += "<tbody>";
+                //accont types
+                acc_type_list=Object.keys(data);
+                alert(acc_type_list);
+                //account subtypes
+                asset_subtype_list=Object.keys(data["Asset"]);
+                liability_subtype_list=Object.keys(data["Liability"]);
+                unknown_subtype_list=Object.keys(data["Unknown"]);
+                revenue_subtype_list=Object.keys(data["Revenue"]);
+                expense_subtype_list=Object.keys(data["Expense"]);
                 for(i=0; i<row; i++){
                     journal += "<tr>";
                     journal += "<td><input type='text'></td>";
                     for (j = 3; j < col; j++) {
-                        journal += "<td><select><option disabled selected value> -- select an option -- </option></select></td>";
+                        journal += "<td><select><option disabled selected value> -- select an option -- </option>";
+                        for(acc_index=)
+                        "</select></td>";
                     }//for col
                     for(k=0; k<2; k++){
                         journal += "<td><input type='text'></td>";
