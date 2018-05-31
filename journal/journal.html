@@ -52,7 +52,7 @@
                     //account subtype
                     journal += "<td><select id="+id+" onchange='getAccList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++;
-                    journal += "<td><select id="+id+" style='width:180px'><option disabled selected value> -- select an option -- </option>";
+                    journal += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
                         journal += "<td><input id="+id+" type='text'></td>";
@@ -65,6 +65,28 @@
                 return journal;
             }//create_journal()
 
+            function findObjectByKey(array, key, value) {
+                    for (var i = 0; i < array.length; i++) {
+                        if (array[i][key] === value) {
+                            return array[i];
+                        }
+                    }
+                    return null;
+                }//find object from an array
+
+            function getAccNum(select_acc){
+                select_acc_id=select_acc.getAttribute("id");
+                select_acc_value=select_acc.value;
+
+                select_subtype_value=document.getElementById(parseInt(select_acc_id)-1).value;
+                select_type_value=document.getElementById(parseInt(select_acc_id)-2).value;
+                input_acc_num=document.getElementById(parseInt(select_acc_id)-3);
+
+                list_acc=data[select_type_value][select_subtype_value];
+                acc=findObjectByKey(list_acc, "title", select_acc_value);
+                input_acc_num.value=acc["id"];
+            }//getAccNum()
+
             function getAccList(select_subtype){
                 select_subtype_id=select_subtype.getAttribute("id");
                 select_subtype_value=select_subtype.value;
@@ -73,10 +95,16 @@
                 select_type_value=select_type.value;
 
                 select_acc=document.getElementById(parseInt(select_subtype_id)+1);
+                input_acc_num=document.getElementById(parseInt(select_type_id)-1);
                 clearSelect(select_acc);
 
                 list=data[select_type_value][select_subtype_value];
-                for(i=0;i<list.length;i++){
+                //acc_num
+                option=document.createElement("option");
+                option.text=list[0]["title"];
+                select_acc.add(option);
+                input_acc_num.value=list[0]["id"];
+                for(i=1;i<list.length;i++){
                     option=document.createElement("option");
                     option.text=list[i]["title"];
                     select_acc.add(option);
@@ -101,7 +129,12 @@
                 input_acc_num=document.getElementById(parseInt(select_type_id)-1);
                 clearSelect(select_acc);
                 list_acc=data[select_type_value][select_subtype_value];
-                for(i=0;i<list_acc.length;i++){
+                //acc_num
+                option=document.createElement("option");
+                    option.text=list_acc[0]["title"];
+                    select_acc.add(option);
+                    input_acc_num.value=list_acc[0]["id"];
+                for(i=1;i<list_acc.length;i++){
                     option=document.createElement("option");
                     option.text=list_acc[i]["title"];
                     select_acc.add(option);
@@ -127,18 +160,20 @@
                     //insert new row
                     row = journal.insertRow(-1);
                     html = "";
+                    id++;
                     html= "<td><input id="+id+" type='text'></td>";
+                    id++;
                     //account type
                     html += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++;
                     for(account_index=0; account_index<acc_type_list.length; account_index++){
-                        html+="<option value="+acc_type_list[account_index].toLowerCase()+">"+acc_type_list[account_index]+"</option>";
+                        html+="<option value="+acc_type_list[account_index]+">"+acc_type_list[account_index]+"</option>";
                     }//account_type
                     "</select></td>";
                     //account subtype
-                    html += "<td><select id="+id+" style='width:180px'><option disabled selected value> -- select an option -- </option>";
+                    html += "<td><select id="+id+" onchange='getAccList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++;
-                    html += "<td><select id="+id+" style='width:180px'><option disabled selected value> -- select an option -- </option>";
+                    html += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
                         html += "<td><input id="+id+" type='text'></td>";

@@ -16,6 +16,7 @@
 		},
 
 	"Expense":{"Billing":[{"id":17, "title":"Electricity"},{"id":18, "title":"Gas"}],
-		"Salary":[{"id":19, "title":"John"},{"id":20, "title":"Voldmart"}]
+		"Salary":[{"id":19, "title":"John"},{"id":20, "title":"Voldmart"}],
+		"Rent":[{"id":21, "title":"Model town building"}, {"id":22, "title":"Satellite town building"}]
 		}
 }
