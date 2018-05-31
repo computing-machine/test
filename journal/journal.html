@@ -17,6 +17,7 @@
                 var unknown_subtype_list="";
                 var revenue_subtype_list="";
                 var expense_subtype_list="";
+                var data="";
 
             function create_journal(row, col, head, data){
                 var journal="";
@@ -34,25 +35,6 @@
                 journal += "<tbody>";
                 //accont types
                 acc_type_list=Object.keys(data);
-                //accounts list
-                var arr=[];
-                for(a=0; a<acc_type_list.length; a++){
-                    subtype_list = Object.keys(data[acc_type_list[a]]);
-                    arr[a] = [subtype_list.length];
-                    for (b = 0; b < subtype_list.length; b++) {
-                        accounts_list=data[acc_type_list[a]][subtype_list[b]].length;
-                        arr[a][b]=[accounts_list];
-                        for(c=0; c<accounts_list; c++){
-                            arr[a][b][c]=data[acc_type_list[a]][subtype_list[b]][c];
-                        }//for
-                    }//for outer
-                }//outer for*/
-                size(arr.length);
-                asset_subtype_list=Object.keys(data["Asset"]);
-                liability_subtype_list=Object.keys(data["Liability"]);
-                unknown_subtype_list=Object.keys(data["Unknown"]);
-                revenue_subtype_list=Object.keys(data["Revenue"]);
-                expense_subtype_list=Object.keys(data["Expense"]);
 
                 //creating journal
                 for(i=0; i<row; i++){
@@ -64,11 +46,11 @@
                     journal += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++;
                     for(account_index=0; account_index<acc_type_list.length; account_index++){
-                        journal+="<option value="+acc_type_list[account_index].toLowerCase()+">"+acc_type_list[account_index]+"</option>";
+                        journal+="<option value="+acc_type_list[account_index]+">"+acc_type_list[account_index]+"</option>";
                     }//account_type
                     "</select></td>";
                     //account subtype
-                    journal += "<td><select id="+id+" style='width:180px'><option disabled selected value> -- select an option -- </option>";
+                    journal += "<td><select id="+id+" onchange='getAccList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++;
                     journal += "<td><select id="+id+" style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
@@ -82,35 +64,53 @@
                 journal += "</table>";
                 return journal;
             }//create_journal()
-            
-            function getSubList(select_type){
-                id=select_type.getAttribute("id");
-                id++;
-                acc_type=select_type.value;
-                acc_type.toLowerCase();
-                if(acc_type=="asset")
-                    list=asset_subtype_list;
-                else if(acc_type=="liability")
-                    list=liability_subtype_list;
-                else if(acc_type=="unknown")
-                    list=unknown_subtype_list;
-                else if(acc_type=="revenue")
-                    list=revenue_subtype_list;
-                else
-                    list=expense_subtype_list;
 
-                select_subtype=document.getElementById(id);
-                clearSelect(select_subtype);
+            function getAccList(select_subtype){
+                select_subtype_id=select_subtype.getAttribute("id");
+                select_subtype_value=select_subtype.value;
+            
+                select_type=document.getElementById(select_subtype_id-1);
+                select_type_value=select_type.value;
+
+                select_acc=document.getElementById(parseInt(select_subtype_id)+1);
+                clearSelect(select_acc);
+
+                list=data[select_type_value][select_subtype_value];
                 for(i=0;i<list.length;i++){
                     option=document.createElement("option");
-                    option.text=list[i];
+                    option.text=list[i]["title"];
+                    select_acc.add(option);
+                }//for
+            }//getAccList
+            
+            function getSubList(select_type){
+                select_type_id=select_type.getAttribute("id");
+                select_type_value=select_type.value;
+
+                select_subtype=document.getElementById(parseInt(select_type_id)+1);
+                clearSelect(select_subtype);
+                list_type=Object.keys(data[select_type_value]);
+                for(i=0;i<list_type.length;i++){
+                    option=document.createElement("option");
+                    option.text=list_type[i];
                     select_subtype.add(option);
+                }//for
+                select_subtype_value=select_subtype.value;
+
+                select_acc=document.getElementById(parseInt(select_type_id)+2);
+                input_acc_num=document.getElementById(parseInt(select_type_id)-1);
+                clearSelect(select_acc);
+                list_acc=data[select_type_value][select_subtype_value];
+                for(i=0;i<list_acc.length;i++){
+                    option=document.createElement("option");
+                    option.text=list_acc[i]["title"];
+                    select_acc.add(option);
                 }//for
             }//getSubList
 
-            function clearSelect(select_subtype){
-                for (i = select_subtype.length - 1; i >= 0; i--) {
-                    select_subtype.remove(i);
+            function clearSelect(select){
+                for (i = select.length - 1; i >= 0; i--) {
+                    select.remove(i);
                 }
             }//clearSelect
 
@@ -148,7 +148,8 @@
                 }//create_row
 
             function show_journal(){
-                $.getJSON("database.json", {},function(data) {
+                $.getJSON("database.json", {},function(database) {
+                    data=database;
                     head=["Number", "Type", "Sub-type", "GL Account", "Debit", "Credit"];
                     html="";
                     journal=create_journal(2, 6, head, data);
