@@ -61,23 +61,51 @@
             }//create_journal()
 
             function getAcc(event,input_acc) {
+                input_acc_id=input_acc.getAttribute("id");
                 if (event.keyCode == '13' && input_acc.value!='') {
                     val=input_acc.value;
                     x=findObjectByKeyJSON("id", val);
+                    select_type=document.getElementById(parseInt(input_acc_id)+1);
+                    select_type.value=x[0];
+                    
+                    select_subtype=document.getElementById(parseInt(input_acc_id)+2);
+                    clearSelect(select_subtype);
+                    list_type=Object.keys(data[select_type.value]);
+                    for(i=0;i<list_type.length;i++){
+                        option=document.createElement("option");
+                        option.text=list_type[i];
+                        select_subtype.add(option);
+                    }//for
+                    select_subtype.value=x[1];
+
+                    select_acc=document.getElementById(parseInt(input_acc_id)+3);
+                    clearSelect(select_acc);
+                    list_acc=data[select_type.value][select_subtype.value];
+                    //acc_num
+                    for(i=0;i<list_acc.length;i++){
+                        option=document.createElement("option");
+                        option.text=list_acc[i]["title"];
+                        select_acc.add(option);
+                    }//for*/
+                    select_acc.value=x[2].title;
                 }//if
                 return;
             }//function
 
             function findObjectByKeyJSON(key, value){
                 type_list=Object.keys(data);
-                alert(type_list);
                 for(i=0; i<type_list.length; i++){
                     sub_list=Object.keys(data[type_list[i]]);
                     for(j=0;j<sub_list.length;j++){
                         acc_list=data[type_list[i]][sub_list[j]];
-                        for(k=0; k<acc_list; k++){
-                            if(data[type_list[i]][sub_list[j]][k][key]==value)
-                                return data[type_list[i]][sub_list[j]][k];
+                        for(k=0; k<acc_list.length; k++){
+                            if(data[type_list[i]][sub_list[j]][k][key]==value){
+                                arr=[];
+                                arr.push(type_list[i]);
+                                arr.push(sub_list[j]);
+                                arr.push(data[type_list[i]][sub_list[j]][k]);
+                                return arr;
+                            }//if
                         }//for
                     }//for
                 }//for
@@ -179,7 +207,7 @@
                     row = journal.insertRow(-1);
                     html = "";
                     id++;
-                    html= "<td><input id="+id+" type='text' style='width:80px;'></td>";
+                    html= "<td><input id="+id+" onkeypress='getAcc(event, this)' onfocusout='getAcc(event, this)' type='text' style='width:80px;'></td>";
                     id++;
                     //account type
                     html += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
