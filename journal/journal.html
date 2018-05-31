@@ -6,23 +6,18 @@
         <script src="../database.json"></script>
     </head>
 
-    <body onload="show_journal()">
-        <div id="journal_div"></div>
+    <body id="journal_div" onload="show_journal()" style="width: auto;">
         
         <script>
                 var acc_type_list="";
                 //account subtypes
                 var asset_subtype_list="";
-                var liability_subtype_list="";
-                var unknown_subtype_list="";
-                var revenue_subtype_list="";
-                var expense_subtype_list="";
                 var data="";
 
             function create_journal(row, col, head, data){
                 var journal="";
                 var id=1;
-                journal = "<table id='journal' class='table table-hover'>";
+                journal = "<table id='journal' class='table'>";
 
                 journal += "<thead>";
                 journal += "<tr>";
@@ -40,10 +35,10 @@
                 for(i=0; i<row; i++){
                     journal += "<tr>";
                     //account number
-                    journal += "<td><input id="+id+" type='text'></td>";
+                    journal += "<td><input id="+id+" onkeypress='getAcc(event, this)' type='text'style='width:80px;'></td>";
                     id++;
                     //account type
-                    journal += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
+                    journal += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px;'><option disabled selected value> -- select an option -- </option>";
                     id++;
                     for(account_index=0; account_index<acc_type_list.length; account_index++){
                         journal+="<option value="+acc_type_list[account_index]+">"+acc_type_list[account_index]+"</option>";
@@ -55,7 +50,7 @@
                     journal += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
-                        journal += "<td><input id="+id+" type='text'></td>";
+                        journal += "<td><input id="+id+" type='text' style='width:80px'></td>";
                         id++;
                     }//for debit
                     journal += "</tr>";
@@ -64,6 +59,29 @@
                 journal += "</table>";
                 return journal;
             }//create_journal()
+
+            function getAcc(event,input_acc) {
+                if (event.keyCode == '13' && input_acc.value!='') {
+                    val=input_acc.value;
+                    x=findObjectByKeyJSON("id", val);
+                }//if
+                return;
+            }//function
+
+            function findObjectByKeyJSON(key, value){
+                type_list=Object.keys(data);
+                alert(type_list);
+                for(i=0; i<type_list.length; i++){
+                    sub_list=Object.keys(data[type_list[i]]);
+                    for(j=0;j<sub_list.length;j++){
+                        acc_list=data[type_list[i]][sub_list[j]];
+                        for(k=0; k<acc_list; k++){
+                            if(data[type_list[i]][sub_list[j]][k][key]==value)
+                                return data[type_list[i]][sub_list[j]][k];
+                        }//for
+                    }//for
+                }//for
+            }//findObject
 
             function findObjectByKey(array, key, value) {
                     for (var i = 0; i < array.length; i++) {
@@ -161,7 +179,7 @@
                     row = journal.insertRow(-1);
                     html = "";
                     id++;
-                    html= "<td><input id="+id+" type='text'></td>";
+                    html= "<td><input id="+id+" type='text' style='width:80px;'></td>";
                     id++;
                     //account type
                     html += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
@@ -176,7 +194,7 @@
                     html += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
-                        html += "<td><input id="+id+" type='text'></td>";
+                        html += "<td><input id="+id+" type='text' style='width:80px;'></td>";
                         id++;
                     }//for debit
                     row.innerHTML=html;
