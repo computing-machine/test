@@ -14,15 +14,14 @@
                 var asset_subtype_list="";
                 var data="";
 
-            function create_table(row, col, head, data){
-                var journal="";
-                var id=1;
-                journal=document.createElement("table");
-                attr_id=document.createAttribute("id");
-                attr_id.value=id;
-            }//create_table()
+            function addAttribute(ele, attr_name, attr_value){
+                var attr=document.createAttribute(attr_name);
+                attr.value=attr_value;
+                ele.setAttributeNode(attr);
+            }//addAttribute()
 
             function create_journal(row, col, head, data){
+                var r=["dr", "cr"];
                 var journal="";
                 var id=1;
                 journal = "<table id='journal' class='table'>";
@@ -58,12 +57,14 @@
                     journal += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
-                        journal += "<td><input id="+id+" type='text' style='width:80px'></td>";
+                        journal += "<td><input id="+id+" class='"+r[k]+"' type='text' style='width:80px'></td>";
                         id++;
                     }//for debit
                     journal += "</tr>";
                 }//for row
-                journal+="<tr><td><label>Narrative</label></td><td colspan='5'><input type='text' style='width:100%;'></td></tr>"
+                journal+="<tr><td><label id="+id+">Narrative</label></td>";
+                id++;
+                journal+="<td colspan='5'><input id="+id+" type='text' style='width:100%;'></td></tr>"
                 journal += "</tbody>";
                 journal += "</table>";
                 return journal;
@@ -146,11 +147,11 @@
                 select_subtype_id=select_subtype.getAttribute("id");
                 select_subtype_value=select_subtype.value;
             
-                select_type=document.getElementById(select_subtype_id-1);
+                select_type=document.getElementById(parseInt(select_subtype_id)-1);
                 select_type_value=select_type.value;
 
                 select_acc=document.getElementById(parseInt(select_subtype_id)+1);
-                input_acc_num=document.getElementById(parseInt(select_type_id)-1);
+                input_acc_num=document.getElementById(parseInt(select_subtype_id)-2);
                 clearSelect(select_acc);
 
                 list=data[select_type_value][select_subtype_value];
@@ -209,11 +210,12 @@
             }//create_button()
 
             function create_row(journal, col) {
+                    var r=["dr", "cr"];
                     //get the last input id
                     cells=document.getElementsByTagName("td");
-                    id=cells[cells.length-1].childNodes[0].getAttribute("id");
+                    id=cells[cells.length-3].childNodes[0].getAttribute("id");
                     //insert new row
-                    row = journal.insertRow(journal.rows.length-2);
+                    row = journal.insertRow(journal.rows.length-1);
                     html = "";
                     id++;
                     html= "<td><input id="+id+" onkeypress='getAcc(event, this)' onfocusout='getAcc(event, this)' type='text' style='width:80px;'></td>";
@@ -231,10 +233,15 @@
                     html += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
-                        html += "<td><input id="+id+" type='text' style='width:80px;'></td>";
+                        html += "<td><input id="+id+" class='"+r[k]+"' type='text' style='width:80px;'></td>";
                         id++;
                     }//for debit
                     row.innerHTML=html;
+                    cells=document.getElementsByTagName("td");
+                    cells[cells.length-2].childNodes[0].setAttribute("id", id);
+                    id++;
+                    cells[cells.length-1].childNodes[0].setAttribute("id", id);
+
                 }//create_row
 
             function show_journal(){
