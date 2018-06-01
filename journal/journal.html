@@ -14,6 +14,14 @@
                 var asset_subtype_list="";
                 var data="";
 
+            function create_table(row, col, head, data){
+                var journal="";
+                var id=1;
+                journal=document.createElement("table");
+                attr_id=document.createAttribute("id");
+                attr_id.value=id;
+            }//create_table()
+
             function create_journal(row, col, head, data){
                 var journal="";
                 var id=1;
@@ -55,6 +63,7 @@
                     }//for debit
                     journal += "</tr>";
                 }//for row
+                journal+="<tr><td><label>Narrative</label></td><td colspan='5'><input type='text' style='width:100%;'></td></tr>"
                 journal += "</tbody>";
                 journal += "</table>";
                 return journal;
@@ -204,7 +213,7 @@
                     cells=document.getElementsByTagName("td");
                     id=cells[cells.length-1].childNodes[0].getAttribute("id");
                     //insert new row
-                    row = journal.insertRow(-1);
+                    row = journal.insertRow(journal.rows.length-2);
                     html = "";
                     id++;
                     html= "<td><input id="+id+" onkeypress='getAcc(event, this)' onfocusout='getAcc(event, this)' type='text' style='width:80px;'></td>";
