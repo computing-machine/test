@@ -1,5 +1,5 @@
 {
-	"Asset":{"Current":[{"id":1, "title":"Recievables"},{"id":2, "title":"Cash"}],
+	"Asset":{"Current":[{"id":1, "title":"Recievables", "trans":[]},{"id":2, "title":"Cash"}],
 		"Long-term":[{"id":3, "title":"Equipment"},{"id":4, "title":"Land"}]
 		},
 	

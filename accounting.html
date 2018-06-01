@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body onload="createPage()">
 
 
 	<div class="">
@@ -44,7 +44,7 @@
 						<ul class="list-unstyled components">
 							<li>
 								<a data-toggle="collapse" data-target="#homeSubmenu" data-parent="#menu" aria-expanded="false">
-									<b>Chart of Accounts</b>
+									<b class="head">Chart of Accounts</b>
 								</a>
 								<ul class="collapse list-unstyled" id="homeSubmenu">
 									<li>
@@ -56,13 +56,13 @@
 								</ul>
 							</li>
 							<li>
-								<a id="journal" aria-expanded="false">
+								<a id="journal">
 									<b>General Journel</b>
 								</a>
 							</li>
 							<li>
 								<a data-toggle="collapse" data-target="#purchaseSubmenu" data-parent="#menu" aria-expanded="false">
-									<b>Cash</b>
+									<b class="head">Cash</b>
 								</a>
 								<ul class="collapse list-unstyled" id="purchaseSubmenu">
 									<li>
@@ -75,7 +75,7 @@
 							</li>
 							<li>
 								<a data-toggle="collapse" data-target="#accountSubmenu" data-parent="#menu" aria-expanded="false">
-									<b>Account</b>
+									<b class="head">Account</b>
 								</a>
 								<ul class="collapse list-unstyled" id="accountSubmenu">
 									<li>
@@ -146,7 +146,19 @@
 
 	<script type="text/javascript">
 
+	var data="";
+	function createPage(){
+		
+	}//createPage()
+	$.getJSON("database.json", {},function(database) {
+			data=database;
+		});
+
 		$(document).ready(function () {
+
+			$(".head").click(function(){
+
+			});
 
 			$("#chart").click(function (e) {
 				document.getElementById("realContent").innerHTML='<object type="text/html" data="dtable/dtable.html" style="height:600px; width:100%;" ></object>';

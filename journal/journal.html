@@ -42,7 +42,7 @@
                 for(i=0; i<row; i++){
                     journal += "<tr>";
                     //account number
-                    journal += "<td><input id="+id+" onkeypress='getAcc(event, this)' type='text'style='width:80px;'></td>";
+                    journal += "<td><input id="+id+" onkeypress='getAccOnKey(event, this)' onfocusout='getAccOnFocus(this)' type='text'style='width:80px;'></td>";
                     id++;
                     //account type
                     journal += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px;'><option disabled selected value> -- select an option -- </option>";
@@ -57,20 +57,63 @@
                     journal += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
-                        journal += "<td><input id="+id+" class='"+r[k]+"' type='text' style='width:80px'></td>";
+                        journal += "<td><input id="+id+" class='"+r[k]+"' onfocusout='clearOther(this)' type='text' style='width:80px'></td>";
                         id++;
                     }//for debit
                     journal += "</tr>";
                 }//for row
                 journal+="<tr><td><label id="+id+">Narrative</label></td>";
                 id++;
-                journal+="<td colspan='5'><input id="+id+" type='text' style='width:100%;'></td></tr>"
+                journal+="<td colspan='5'><input class='nar' id="+id+" type='text' style='width:100%;'></td></tr>"
                 journal += "</tbody>";
                 journal += "</table>";
                 return journal;
             }//create_journal()
 
-            function getAcc(event,input_acc) {
+            function clearOther(input){
+                if(input.value!=""){
+                    input_id=input.getAttribute("id");
+                    if(input.getAttribute("class")=="dr"){
+                        cr_input=document.getElementById(parseInt(input_id)+1);
+                        cr_input.value="";
+                    }//if
+                    else{
+                        dr_input=document.getElementById(parseInt(input_id)-1);
+                        dr_input.value="";
+                    }//else
+                }//if
+            }//clearOther()
+
+            function getAccOnFocus(input_acc) {
+                input_acc_id=input_acc.getAttribute("id");
+                val=input_acc.value;
+                x=findObjectByKeyJSON("id", val);
+                select_type=document.getElementById(parseInt(input_acc_id)+1);
+                select_type.value=x[0];
+                
+                select_subtype=document.getElementById(parseInt(input_acc_id)+2);
+                clearSelect(select_subtype);
+                list_type=Object.keys(data[select_type.value]);
+                for(i=0;i<list_type.length;i++){
+                    option=document.createElement("option");
+                    option.text=list_type[i];
+                    select_subtype.add(option);
+                }//for
+                select_subtype.value=x[1];
+
+                select_acc=document.getElementById(parseInt(input_acc_id)+3);
+                clearSelect(select_acc);
+                list_acc=data[select_type.value][select_subtype.value];
+                //acc_num
+                for(i=0;i<list_acc.length;i++){
+                    option=document.createElement("option");
+                    option.text=list_acc[i]["title"];
+                    select_acc.add(option);
+                }//for*/
+                select_acc.value=x[2].title;
+            }//function
+
+            function getAccOnKey(event,input_acc) {
                 input_acc_id=input_acc.getAttribute("id");
                 if (event.keyCode == '13' && input_acc.value!='') {
                     val=input_acc.value;
@@ -218,7 +261,7 @@
                     row = journal.insertRow(journal.rows.length-1);
                     html = "";
                     id++;
-                    html= "<td><input id="+id+" onkeypress='getAcc(event, this)' onfocusout='getAcc(event, this)' type='text' style='width:80px;'></td>";
+                    html= "<td><input id="+id+" onkeypress='getAccOnKey(event, this)' onfocusout='getAccOnFocus(this)' type='text' style='width:80px;'></td>";
                     id++;
                     //account type
                     html += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
@@ -233,7 +276,7 @@
                     html += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
                     id++
                     for(k=0; k<2; k++){
-                        html += "<td><input id="+id+" class='"+r[k]+"' type='text' style='width:80px;'></td>";
+                        html += "<td><input id="+id+" class='"+r[k]+"' onfocusout='clearOther(this)' type='text' style='width:80px;'></td>";
                         id++;
                     }//for debit
                     row.innerHTML=html;
@@ -243,6 +286,27 @@
                     cells[cells.length-1].childNodes[0].setAttribute("id", id);
 
                 }//create_row
+
+                function post_entries(journal){
+                    dr_arr=document.getElementsByClassName("dr");
+                    cr_arr=document.getElementsByClassName("cr");
+                    var dr_sum=0;
+                    var cr_sum=0;
+                    for(i=0; i<dr_arr.length; i++){
+                        dr_sum+=Number(dr_arr[i].value);
+                        cr_sum+=Number(cr_arr[i].value);
+                    }//for
+                    if(dr_sum==cr_sum){
+                        if(document.getElementsByClassName("nar")[0].value!=""){
+                            alert("cool!");
+                        }//if
+                        else{
+                            alert("You forgot the narrative.");
+                        }//else
+                    }//if
+                    else
+                        alert("wrong bro!");
+                }//post_entries()
 
             function show_journal(){
                 $.getJSON("database.json", {},function(database) {
