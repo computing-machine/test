@@ -33,21 +33,17 @@
 			<div class="col-md-2">
 				<nav id="sidebar">
 					<div class="sidebar-header">
-						<div class="col-md-offset-2">
-							<h3>Accountant</h3>
-						</div>
-						<div class="col-md-offset-3" style="font-size:5em;">
-							<i class="fas fa-money-bill"></i>
-						</div>
+						<div id ="user" class="col-md-offset-2"></div>
+						<div id="user_image" class="col-md-offset-3" style="font-size:5em;"></div>
 					</div>
 
 					<div id="menu">
 						<ul class="list-unstyled components">
 							<li>
-								<a data-toggle="collapse" data-target="#homeSubmenu" data-parent="#menu" aria-expanded="false">
+								<a data-toggle="collapse" data-target="#1" data-parent="#menu" aria-expanded="false">
 									<b class="head">Chart of Accounts</b>
 								</a>
-								<ul class="collapse list-unstyled" id="homeSubmenu">
+								<ul class="collapse list-unstyled" id="1">
 									<li>
 										<a href="#">New account</a>
 									</li>
@@ -62,10 +58,10 @@
 								</a>
 							</li>
 							<li>
-								<a data-toggle="collapse" data-target="#purchaseSubmenu" data-parent="#menu" aria-expanded="false">
+								<a data-toggle="collapse" data-target="#2" data-parent="#menu" aria-expanded="false">
 									<b class="head">Cash</b>
 								</a>
-								<ul class="collapse list-unstyled" id="purchaseSubmenu">
+								<ul class="collapse list-unstyled" id="2">
 									<li>
 										<a href="#">Cash in</a>
 									</li>
@@ -75,10 +71,10 @@
 								</ul>
 							</li>
 							<li>
-								<a data-toggle="collapse" data-target="#accountSubmenu" data-parent="#menu" aria-expanded="false">
-									<b class="head">Account</b>
+								<a data-toggle="collapse" data-target="#3" data-parent="#menu" aria-expanded="false">
+									<b>Account</b>
 								</a>
-								<ul class="collapse list-unstyled" id="accountSubmenu">
+								<ul class="collapse list-unstyled" id="3">
 									<li>
 										<a href="#">View payroll</a>
 									</li>
@@ -141,7 +137,7 @@
 
 
 	<!-- jQuery CDN -->
-	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="bootstrap-3.3.7/js/jquery-1.12.0.min.js"></script>
 	<!-- Bootstrap Js CDN -->
 	<script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 
@@ -149,9 +145,51 @@
 
 	var data="";
 	function createPage(){
-		
+		//user
+		user_ele=document.createElement("h3");
+		user_name=document.createTextNode(data["sidebar"]["header"][0]["user"]);
+		user_ele.appendChild(user_name);
+		document.getElementById("user").appendChild(user_ele);
+
+		//user_image
+		user_img_ele=document.createElement("i");
+		user_img_class=document.createAttribute("class");
+		user_img_class.value=data["sidebar"]["header"][0]["image"];
+		user_img_ele.setAttributeNode(user_img_class);
+		document.getElementById("user_image").appendChild(user_img_ele);
+
+		//list
+		head_list=document.createElement("ul").setAttribute("class", ["list-unstyled","components"]);
+		head_items=data["sidebar"]["menu"];
+		for(i=0; i<head_items.length;i++){
+			head_item=document.createElement("li");
+			head_item_a=document.createElement("a");
+			head_item_a.setAttribute("data-toggle", "collapse");
+			head_item_a.setAttribute("data-target", "#"+i);
+			head_item_a.setAttribute("aria-expanded", "false");
+
+			head_item_b=document.createElement("b");
+			head_item_b.appendChild(document.createTextNode(Object.keys(data["sidebar"]["menu"][i])));
+			head_item_a.appendChild(head_item_b);
+			
+			sub_list=document.createElement("ul");
+			sub_list.setAttribute("class", ["collapse", "list-unstyled"]);
+			sub_list.setAttribute("id", i);
+			head_item_name=Object.keys(data["sidebar"]["menu"][i]);
+			sub_items=data["sidebar"]["menu"][i][head_item_name];
+			for(j=0; j<sub_items.length; j++){
+				sub_item=document.createElement("li");
+				sub_item_a=document.createElement("a").setAttribute("href", "#");
+				sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name][j]);
+				sub_item_a.appendChild(sub_item_name);
+				alert(1);
+				sub_list.appendChild("li");
+				alert(1);
+			}//for
+			head_item.appendChild(sub_list);
+		}//for
 	}//createPage()
-	$.getJSON("database.json", {},function(database) {
+	$.getJSON("accounting.json", {},function(database) {
 			data=database;
 		});
 
