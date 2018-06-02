@@ -181,8 +181,7 @@
 				sub_item=document.createElement("li");
 				sub_item_a=document.createElement("a").setAttribute("href", "#");
 				sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name][j]);
-				sub_item_a.appendChild(sub_item_name);
-				alert(1);
+				alert(sub_item_a.getAttribute("id"));
 				sub_list.appendChild("li");
 				alert(1);
 			}//for
