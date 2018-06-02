@@ -25,9 +25,6 @@
 </head>
 
 <body onload="createPage()">
-
-
-	<div class="">
 		<!-- Sidebar Holder -->
 		<div class="row">
 			<div class="col-md-2">
@@ -37,57 +34,7 @@
 						<div id="user_image" class="col-md-offset-3" style="font-size:5em;"></div>
 					</div>
 
-					<div id="menu">
-						<ul class="list-unstyled components">
-							<li>
-								<a data-toggle="collapse" data-target="#1" data-parent="#menu" aria-expanded="false">
-									<b class="head">Chart of Accounts</b>
-								</a>
-								<ul class="collapse list-unstyled" id="1">
-									<li>
-										<a href="#">New account</a>
-									</li>
-									<li>
-										<a id="chart" href="#">View chart</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a id="journal">
-									<b>General Journel</b>
-								</a>
-							</li>
-							<li>
-								<a data-toggle="collapse" data-target="#2" data-parent="#menu" aria-expanded="false">
-									<b class="head">Cash</b>
-								</a>
-								<ul class="collapse list-unstyled" id="2">
-									<li>
-										<a href="#">Cash in</a>
-									</li>
-									<li>
-										<a href="#">Cash out</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a data-toggle="collapse" data-target="#3" data-parent="#menu" aria-expanded="false">
-									<b>Account</b>
-								</a>
-								<ul class="collapse list-unstyled" id="3">
-									<li>
-										<a href="#">View payroll</a>
-									</li>
-									<li>
-										<a href="#">Change password</a>
-									</li>
-									<li>
-										<a href="login.html">Sign out</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+					<div id="menu"></div>
 				</nav>
 			</div>
 
@@ -130,83 +77,87 @@
 				<div class="line"></div>
 			</div>
 		</div>
-	</div>
 
 
 
 
 
-	<!-- jQuery CDN -->
-	<script src="bootstrap-3.3.7/js/jquery-1.12.0.min.js"></script>
-	<!-- Bootstrap Js CDN -->
-	<script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+		<!-- jQuery CDN -->
+		<script src="bootstrap-3.3.7/js/jquery-1.12.0.min.js"></script>
+		<!-- Bootstrap Js CDN -->
+		<script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 
-	var data="";
-	function createPage(){
-		//user
-		user_ele=document.createElement("h3");
-		user_name=document.createTextNode(data["sidebar"]["header"][0]["user"]);
-		user_ele.appendChild(user_name);
-		document.getElementById("user").appendChild(user_ele);
+		var data="";
+		function createPage(){
+			//sidebar header
+				//user
+			user_ele=document.createElement("h3");
+			user_name=document.createTextNode(data["sidebar"]["header"][0]["user"]);
+			user_ele.appendChild(user_name);
+			document.getElementById("user").appendChild(user_ele);
 
-		//user_image
-		user_img_ele=document.createElement("i");
-		user_img_class=document.createAttribute("class");
-		user_img_class.value=data["sidebar"]["header"][0]["image"];
-		user_img_ele.setAttributeNode(user_img_class);
-		document.getElementById("user_image").appendChild(user_img_ele);
+				//user image
+			user_img_ele=document.createElement("i");
+			user_img_class=document.createAttribute("class");
+			user_img_class.value=data["sidebar"]["header"][0]["image"];
+			user_img_ele.setAttributeNode(user_img_class);
+			document.getElementById("user_image").appendChild(user_img_ele);
 
-		//list
-		head_list=document.createElement("ul").setAttribute("class", ["list-unstyled","components"]);
-		head_items=data["sidebar"]["menu"];
-		for(i=0; i<head_items.length;i++){
-			head_item=document.createElement("li");
-			head_item_a=document.createElement("a");
-			head_item_a.setAttribute("data-toggle", "collapse");
-			head_item_a.setAttribute("data-target", "#"+i);
-			head_item_a.setAttribute("aria-expanded", "false");
-
-			head_item_b=document.createElement("b");
-			head_item_b.appendChild(document.createTextNode(Object.keys(data["sidebar"]["menu"][i])));
-			head_item_a.appendChild(head_item_b);
-			
-			sub_list=document.createElement("ul");
-			sub_list.setAttribute("class", ["collapse", "list-unstyled"]);
-			sub_list.setAttribute("id", i);
-			head_item_name=Object.keys(data["sidebar"]["menu"][i]);
-			sub_items=data["sidebar"]["menu"][i][head_item_name];
-			for(j=0; j<sub_items.length; j++){
-				sub_item=document.createElement("li");
-				sub_item_a=document.createElement("a").setAttribute("href", "#");
-				sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name][j]);
-				alert(sub_item_a.getAttribute("id"));
-				sub_list.appendChild("li");
-				alert(1);
+			//sidebar menu
+			head_list=document.createElement("ul");
+			head_list_class=document.createAttribute("class");
+			head_list.setAttributeNode(head_list_class);
+			head_list.setAttribute("class", "list-unstyled components");
+			head_items=data["sidebar"]["menu"]; //new
+			for(i=0; i<head_items.length; i++){
+				head_item=document.createElement("li");
+				head_item_a=document.createElement("a");
+				head_item_a.setAttribute("data-toggle", "collapse");
+				head_item_a.setAttribute("data-target", "#"+i);
+				head_item_a.setAttribute("aria-expanded", "false");
+				head_item_b=document.createElement("b");
+				head_item_name=document.createTextNode(Object.keys(data["sidebar"]["menu"][i]));
+				head_item_b.appendChild(head_item_name);
+				head_item_a.appendChild(head_item_b);
+				head_item.appendChild(head_item_a);
+				
+				sub_list=document.createElement("ul");
+				sub_list_class=document.createAttribute("class");
+				sub_list.setAttributeNode(sub_list_class);
+				sub_list.setAttribute("class", "collapse list-unstyled");
+				sub_list.setAttribute("id", i);
+				sub_items=data["sidebar"]["menu"][i][head_item_name.data];
+				for(j=0; j<sub_items.length; j++){
+					sub_item=document.createElement("li");
+					sub_item_a=document.createElement("a");
+					sub_item_a.setAttribute("href", "#");
+					sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name.data][j]);
+					sub_item_a.appendChild(sub_item_name);
+					sub_item.appendChild(sub_item_a);
+					sub_list.appendChild(sub_item);
+				}//for
+				head_item.appendChild(sub_list);
+				head_list.appendChild(head_item);
+				document.getElementById("menu").appendChild(head_list);
 			}//for
-			head_item.appendChild(sub_list);
-		}//for
-	}//createPage()
-	$.getJSON("accounting.json", {},function(database) {
-			data=database;
-		});
-
-		$(document).ready(function () {
-
-			$(".head").click(function(){
-
+		}//createPage()
+		$.getJSON("accounting.json", {},function(database) {
+				data=database;
 			});
 
-			$("#chart").click(function (e) {
-				document.getElementById("realContent").innerHTML='<object type="text/html" data="dtable/dtable.html" style="height:600px; width:100%;" ></object>';
-			});
+			$(document).ready(function () {
 
-			$("#journal").click(function (e) {
-				document.getElementById("realContent").innerHTML='<object class="col-md-12" type="text/html" data="journal/journal.html" style="height:500px;"></object>';
+				$("#chart").click(function (e) {
+					document.getElementById("realContent").innerHTML='<object type="text/html" data="dtable/dtable.html" style="height:600px; width:100%;" ></object>';
+				});
+
+				$("#journal").click(function (e) {
+					document.getElementById("realContent").innerHTML='<object class="col-md-12" type="text/html" data="journal/journal.html" style="height:500px;"></object>';
+				});
 			});
-		});
-	</script>
-</body>
+		</script>
+	</body>
 
 </html>
