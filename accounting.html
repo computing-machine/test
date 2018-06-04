@@ -2,11 +2,7 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-	<title>Collapsible sidebar using Bootstrap 3</title>
+	<title>Accountant</title>
 
 	<!-- Bootstrap CSS CDN -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
@@ -14,69 +10,12 @@
 	<link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
 	<!-- Our Custom CSS -->
 	<link rel="stylesheet" href="style.css">
-	<script src="../database.json"></script>
-
-	<style>
-		.panelClass {
-			color: black;
-		}
-	</style>
+	<script src="accountsDatabase.js"></script>
 
 </head>
 
-<body onload="createPage()">
-		<!-- Sidebar Holder -->
-		<div class="row">
-			<div class="col-md-2">
-				<nav id="sidebar">
-					<div class="sidebar-header">
-						<div id ="user" class="col-md-offset-2"></div>
-						<div id="user_image" class="col-md-offset-3" style="font-size:5em;"></div>
-					</div>
-
-					<div id="menu"></div>
-				</nav>
-			</div>
-
-			<!-- Page Content Holder -->
-			<div class="col-md-10">
-				<div class="row">
-					<div class="col-md-12">
-						<div id="content">
-					
-							<nav class="navbar navbar-default">
-								<div class="container-fluid">
-					
-									<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-										<ul class="nav navbar-nav navbar-right">
-											<li>
-												<a href="#">Page</a>
-											</li>
-											<li>
-												<a href="#">Page</a>
-											</li>
-											<li>
-												<a href="#">Page</a>
-											</li>
-											<li>
-												<a href="#">Page</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</nav>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-12">
-						<div class="col-md-12 table-responsive" id="realContent"></div>
-					</div>
-				</div>
-				<div class="line"></div>
-			</div>
-		</div>
+<body>
+		
 
 
 
@@ -87,77 +26,7 @@
 		<!-- Bootstrap Js CDN -->
 		<script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
 
-		<script type="text/javascript">
-
-		var data="";
-		function createPage(){
-			//sidebar header
-				//user
-			user_ele=document.createElement("h3");
-			user_name=document.createTextNode(data["sidebar"]["header"][0]["user"]);
-			user_ele.appendChild(user_name);
-			document.getElementById("user").appendChild(user_ele);
-
-				//user image
-			user_img_ele=document.createElement("i");
-			user_img_class=document.createAttribute("class");
-			user_img_class.value=data["sidebar"]["header"][0]["image"];
-			user_img_ele.setAttributeNode(user_img_class);
-			document.getElementById("user_image").appendChild(user_img_ele);
-
-			//sidebar menu
-			head_list=document.createElement("ul");
-			head_list_class=document.createAttribute("class");
-			head_list.setAttributeNode(head_list_class);
-			head_list.setAttribute("class", "list-unstyled components");
-			head_items=data["sidebar"]["menu"]; //new
-			for(i=0; i<head_items.length; i++){
-				head_item=document.createElement("li");
-				head_item_a=document.createElement("a");
-				head_item_a.setAttribute("data-toggle", "collapse");
-				head_item_a.setAttribute("data-target", "#"+i);
-				head_item_a.setAttribute("aria-expanded", "false");
-				head_item_b=document.createElement("b");
-				head_item_name=document.createTextNode(Object.keys(data["sidebar"]["menu"][i]));
-				head_item_b.appendChild(head_item_name);
-				head_item_a.appendChild(head_item_b);
-				head_item.appendChild(head_item_a);
-				
-				sub_list=document.createElement("ul");
-				sub_list_class=document.createAttribute("class");
-				sub_list.setAttributeNode(sub_list_class);
-				sub_list.setAttribute("class", "collapse list-unstyled");
-				sub_list.setAttribute("id", i);
-				sub_items=data["sidebar"]["menu"][i][head_item_name.data];
-				for(j=0; j<sub_items.length; j++){
-					sub_item=document.createElement("li");
-					sub_item_a=document.createElement("a");
-					sub_item_a.setAttribute("href", "#");
-					sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name.data][j]);
-					sub_item_a.appendChild(sub_item_name);
-					sub_item.appendChild(sub_item_a);
-					sub_list.appendChild(sub_item);
-				}//for
-				head_item.appendChild(sub_list);
-				head_list.appendChild(head_item);
-				document.getElementById("menu").appendChild(head_list);
-			}//for
-		}//createPage()
-		$.getJSON("accounting.json", {},function(database) {
-				data=database;
-			});
-
-			$(document).ready(function () {
-
-				$("#chart").click(function (e) {
-					document.getElementById("realContent").innerHTML='<object type="text/html" data="dtable/dtable.html" style="height:600px; width:100%;" ></object>';
-				});
-
-				$("#journal").click(function (e) {
-					document.getElementById("realContent").innerHTML='<object class="col-md-12" type="text/html" data="journal/journal.html" style="height:500px;"></object>';
-				});
-			});
-		</script>
+		<script src="asTemplate.js"></script>
 	</body>
 
 </html>
