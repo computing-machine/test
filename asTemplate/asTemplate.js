@@ -81,21 +81,17 @@
 			col_div.appendChild(sidebar_ele);
 			row_div.appendChild(col_div);
 
+			side_col=document.createElement("div");
+			side_col.setAttribute("class", "col-md-10");
+			side_col_row=document.createElement("div");
+			side_col_row.setAttribute("class", "row");
+			content_div=document.createElement("div");
+			content_div.setAttribute("id", "realContent");
+			content_div.setAttribute("class", "col-md-12 table-responsive");
+
+			side_col_row.appendChild(content_div);
+			side_col.appendChild(side_col_row);
+			row_div.appendChild(side_col);
+			
 			document.body.appendChild(row_div);
 		}//createPage()
-		/*
-		$.getJSON("accounting.json", {},function(database) {
-				data=database;
-			});
-
-			$(document).ready(function () {
-
-				$("#chart").click(function (e) {
-					document.getElementById("realContent").innerHTML='<object type="text/html" data="dtable/dtable.html" style="height:600px; width:100%;" ></object>';
-				});
-
-				$("#journal").click(function (e) {
-					document.getElementById("realContent").innerHTML='<object class="col-md-12" type="text/html" data="journal/journal.html" style="height:500px;"></object>';
-				});
-			});
-			*/

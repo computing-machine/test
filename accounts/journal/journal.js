@@ -3,7 +3,7 @@ function createJournal(data){
     var headings=["Number", "Type", "Sub-type", "GL Account", "Debit", "Credit"];
     var id=1;
     journal=document.createElement("table");
-    addAtrribute(journal, {"id":id, "class":"table"});
+    addAtrribute(journal, {"id":"journal", "class":"table"});
     journal_head=document.createElement("thead");
     journal_head_row=document.createElement("tr");
     for(i=0; i<6; i++){
@@ -19,6 +19,7 @@ function createJournal(data){
     journal_foot_row=document.createElement("tr");
     journal_foot_row_cell=document.createElement("td");
     add_row_button=create_button("More");
+    add_row_button.addEventListener("click", function(){create_row(document.getElementById("journal"),data)});
     journal_foot_row_cell.appendChild(add_row_button);
     journal_foot_row.appendChild(journal_foot_row_cell);
 
@@ -43,8 +44,8 @@ function createJournal(data){
         //account number input
         acc_num_input=document.createElement("input");
         addAtrribute(acc_num_input, {"id":id, "type":"text", "style":"width:80px"});
-        acc_num_input.addEventListener("keypress", function(){getAccOnKey(event, this, data)});
-        acc_num_input.addEventListener("focusout", function(){getAccOnFocus(this)});
+        acc_num_input.addEventListener("keypress", function(event){getAccOnKey(event, this, data)});
+        acc_num_input.addEventListener("focusout", function(){getAccOnFocus(this, data)});
         id++;
         journal_body_row_cell.appendChild(acc_num_input);
         journal_body_row.appendChild(journal_body_row_cell);
@@ -78,7 +79,7 @@ function createJournal(data){
         //account subtype select
         acc_subtype_select=document.createElement("select");
         addAtrribute(acc_subtype_select, {"id":id, "style":"width:180px;"});
-        acc_subtype_select.addEventListener("change", function(){getAccList(this)});
+        acc_subtype_select.addEventListener("change", function(){getAccList(this, data)});
         id++;
         
         select_option=document.createElement("option");
@@ -95,7 +96,7 @@ function createJournal(data){
         //account subtype select
         acc_select=document.createElement("select");
         addAtrribute(acc_select, {"id":id, "style":"width:180px;"});
-        acc_select.addEventListener("change", function(){getAccNum(this)});
+        acc_select.addEventListener("change", function(){getAccNum(this, data)});
         id++;
         
         select_option=document.createElement("option");
@@ -168,10 +169,10 @@ function clearOther(input){
     }//if
 }//clearOther()
 
-function getAccOnFocus(input_acc) {
+function getAccOnFocus(input_acc, data) {
     input_acc_id=input_acc.getAttribute("id");
     val=input_acc.value;
-    x=findObjectByKeyJSON("id", val);
+    x=findObjectByKeyJSON(data, "id", val);
     select_type=document.getElementById(parseInt(input_acc_id)+1);
     select_type.value=x[0];
     
@@ -198,11 +199,10 @@ function getAccOnFocus(input_acc) {
 }//function
 
 function getAccOnKey(event,input_acc, data) {
-    alert(1);
     input_acc_id=input_acc.getAttribute("id");
     if (event.keyCode == '13' && input_acc.value!='') {
         val=input_acc.value;
-        x=findObjectByKeyJSON("id", val);
+        x=findObjectByKeyJSON(data, "id", val);
         select_type=document.getElementById(parseInt(input_acc_id)+1);
         select_type.value=x[0];
         
@@ -230,7 +230,7 @@ function getAccOnKey(event,input_acc, data) {
     return;
 }//function
 
-function findObjectByKeyJSON(key, value){
+function findObjectByKeyJSON(data, key, value){
     type_list=Object.keys(data);
     for(i=0; i<type_list.length; i++){
         sub_list=Object.keys(data[type_list[i]]);
@@ -258,7 +258,7 @@ function findObjectByKey(array, key, value) {
         return null;
     }//find object from an array
 
-function getAccNum(select_acc){
+function getAccNum(select_acc, data){
     select_acc_id=select_acc.getAttribute("id");
     select_acc_value=select_acc.value;
 
@@ -271,7 +271,7 @@ function getAccNum(select_acc){
     input_acc_num.value=acc["id"];
 }//getAccNum()
 
-function getAccList(select_subtype){
+function getAccList(select_subtype, data){
     select_subtype_id=select_subtype.getAttribute("id");
     select_subtype_value=select_subtype.value;
 
@@ -339,39 +339,98 @@ function create_button(val){
     return button;
 }//create_button()
 
-function create_row(journal, col) {
+function create_row(journal, data) {
     var r=["dr", "cr"];
     //get the last input id
     cells=document.getElementsByTagName("td");
     id=cells[cells.length-3].childNodes[0].getAttribute("id");
     //insert new row
-    row = journal.insertRow(journal.rows.length-1);
-    html = "";
-    id++;
-    html= "<td><input id="+id+" onkeypress='getAccOnKey(event, this)' onfocusout='getAccOnFocus(this)' type='text' style='width:80px;'></td>";
-    id++;
-    //account type
-    html += "<td><select id="+id+" onchange='getSubList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
-    id++;
-    for(account_index=0; account_index<acc_type_list.length; account_index++){
-        html+="<option value="+acc_type_list[account_index]+">"+acc_type_list[account_index]+"</option>";
-    }//account_type
-    "</select></td>";
-    //account subtype
-    html += "<td><select id="+id+" onchange='getAccList(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
-    id++;
-    html += "<td><select id="+id+" onchange='getAccNum(this)' style='width:180px'><option disabled selected value> -- select an option -- </option>";
-    id++
-    for(k=0; k<2; k++){
-        html += "<td><input id="+id+" class='"+r[k]+"' onfocusout='clearOther(this)' type='text' style='width:80px;'></td>";
+    var acc_type_list=Object.keys(data);
+    journal_body_row=journal.insertRow(journal.rows.length-2);
+        journal_body_row_cell=document.createElement("td");
+        //account number input
         id++;
-    }//for debit
-    row.innerHTML=html;
-    cells=document.getElementsByTagName("td");
-    cells[cells.length-2].childNodes[0].setAttribute("id", id);
-    id++;
-    cells[cells.length-1].childNodes[0].setAttribute("id", id);
+        acc_num_input=document.createElement("input");
+        addAtrribute(acc_num_input, {"id":id, "type":"text", "style":"width:80px"});
+        acc_num_input.addEventListener("keypress", function(event){getAccOnKey(event, this, data)});
+        acc_num_input.addEventListener("focusout", function(){getAccOnFocus(this, data)});
+        id++;
+        journal_body_row_cell.appendChild(acc_num_input);
+        journal_body_row.appendChild(journal_body_row_cell);
 
+        //account type
+        journal_body_row_cell=document.createElement("td");
+        //account type select
+        acc_type_select=document.createElement("select");
+        addAtrribute(acc_type_select, {"id":id, "style":"width:180px;"});
+        acc_type_select.addEventListener("change", function(){getSubList(this, data)});
+        id++;
+        select_option=document.createElement("option");
+        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
+        select_option_text=document.createTextNode(" -- select an option -- ");
+        select_option.appendChild(select_option_text);
+        acc_type_select.appendChild(select_option);
+        var account_index;
+        for(account_index=0; account_index<acc_type_list.length; account_index++){
+            select_option=document.createElement("option");
+            select_option.setAttribute("value", acc_type_list[account_index]);
+            select_option_text=document.createTextNode(acc_type_list[account_index]);
+            select_option.appendChild(select_option_text);
+            acc_type_select.appendChild(select_option);
+        }//for
+        
+        journal_body_row_cell.appendChild(acc_type_select);
+        journal_body_row.appendChild(journal_body_row_cell);
+        
+        //account subtype
+        journal_body_row_cell=document.createElement("td");
+        //account subtype select
+        acc_subtype_select=document.createElement("select");
+        addAtrribute(acc_subtype_select, {"id":id, "style":"width:180px;"});
+        acc_subtype_select.addEventListener("change", function(){getAccList(this, data)});
+        id++;
+        
+        select_option=document.createElement("option");
+        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
+        select_option_text=document.createTextNode(" -- select an option -- ");
+        select_option.appendChild(select_option_text);
+        acc_subtype_select.appendChild(select_option);
+        
+        journal_body_row_cell.appendChild(acc_subtype_select);
+        journal_body_row.appendChild(journal_body_row_cell);
+
+        //accounts
+        journal_body_row_cell=document.createElement("td");
+        //account subtype select
+        acc_select=document.createElement("select");
+        addAtrribute(acc_select, {"id":id, "style":"width:180px;"});
+        acc_select.addEventListener("change", function(){getAccNum(this, data)});
+        id++;
+        
+        select_option=document.createElement("option");
+        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
+        select_option_text=document.createTextNode(" -- select an option -- ");
+        select_option.appendChild(select_option_text);
+        acc_select.appendChild(select_option);
+
+        journal_body_row_cell.appendChild(acc_select);
+        journal_body_row.appendChild(journal_body_row_cell);
+        
+        //debit credit
+        var k;
+        for(k=0;k<2;k++){
+            journal_body_row_cell=document.createElement("td");
+            input=document.createElement("input");
+            addAtrribute(input, {"id":id, "class":r[k], "type":"text", "style":"width:80px;"});
+            input.addEventListener("focusout", function(){clearOther(this)});
+            id++;
+            journal_body_row_cell.appendChild(input);
+            journal_body_row.appendChild(journal_body_row_cell);
+        }//for
+        cells=document.getElementsByTagName("td");
+        cells[cells.length-2].childNodes[0].setAttribute("id", id);
+        id++;
+        cells[cells.length-1].childNodes[0].setAttribute("id", id);
 }//create_row
 
 function post_entries(){
