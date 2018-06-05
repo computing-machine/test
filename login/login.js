@@ -81,7 +81,6 @@ function logIn(){
                 b.removeChild(b.childNodes[i]);
         }//for
         createPage(aData);
-        fArray[0]();
     }//if
     else if(username=="p" && password=="p"){
         b=document.body;

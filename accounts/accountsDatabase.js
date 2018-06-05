@@ -6,5 +6,10 @@ aData={
                 }
 }
 
-fArray=[f0,f1];
+aLinks=[[function(){
+        var table=createDataTable(dataSet);
+        div=document.getElementById("realContent");
+        div.innerHTML="";
+        div.appendChild(table);
+}],[]];
 
