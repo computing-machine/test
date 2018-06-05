@@ -6,3 +6,5 @@ aData={
                 }
 }
 
+fArray=[f0,f1];
+

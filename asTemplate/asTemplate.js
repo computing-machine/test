@@ -59,7 +59,7 @@
 				head_item=document.createElement("li");
 				head_item_a=document.createElement("a");
 				head_item_a.setAttribute("data-toggle", "collapse");
-				head_item_a.setAttribute("data-target", "#"+i);
+				head_item_a.setAttribute("data-target", "#options"+i);
 				head_item_a.setAttribute("aria-expanded", "false");
 				head_item_b=document.createElement("b");
 				head_item_name=document.createTextNode(Object.keys(data["sidebar"]["menu"][i]));
@@ -71,7 +71,7 @@
 				sub_list_class=document.createAttribute("class");
 				sub_list.setAttributeNode(sub_list_class);
 				sub_list.setAttribute("class", "collapse list-unstyled");
-				sub_list.setAttribute("id", i);
+				sub_list.setAttribute("id", "options"+i);
 				sub_items=data["sidebar"]["menu"][i][head_item_name.data];
 				for(j=0; j<sub_items.length; j++){
 					sub_item=document.createElement("li");
