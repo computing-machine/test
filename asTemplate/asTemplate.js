@@ -1,8 +1,17 @@
 		function createPage(data){
-			row_div=document.createElement("div");
-			row_div.setAttribute("class", "row");
-			col_div=document.createElement("div");
-			col_div.setAttribute("class", "col-md-2");
+			//create a container for page content
+			container=document.createElement("div");
+			container.setAttribute("class", "container-fluid");
+
+			//create a singel major row
+			major_row=document.createElement("div");
+			major_row.setAttribute("class", "row");
+
+			//partition row for a sidebar
+			sidebar_space=document.createElement("div");
+			sidebar_space.setAttribute("class", "col-md-3");
+
+			//create the sidebar
 			sidebar_ele=document.createElement("nav");
 			sidebar_ele.setAttribute("id", "sidebar");
 			sidebar_head=document.createElement("div");
@@ -68,6 +77,7 @@
 					sub_item=document.createElement("li");
 					sub_item_a=document.createElement("a");
 					sub_item_a.setAttribute("href", "#");
+					sub_item_a.addEventListener("click", function(){showJournal(tData)});//added line
 					sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name.data][j]);
 					sub_item_a.appendChild(sub_item_name);
 					sub_item.appendChild(sub_item_a);
@@ -78,20 +88,33 @@
 			}//for
 			menu_div.appendChild(head_list);
 			sidebar_ele.appendChild(menu_div);
-			col_div.appendChild(sidebar_ele);
-			row_div.appendChild(col_div);
+			sidebar_space.appendChild(sidebar_ele);
+			major_row.appendChild(sidebar_space);
 
-			side_col=document.createElement("div");
-			side_col.setAttribute("class", "col-md-10");
-			side_col_row=document.createElement("div");
-			side_col_row.setAttribute("class", "row");
+			//partition major row for right-side content
+			right_side=document.createElement("div");
+			right_side.setAttribute("class", "col-md-9");
+
+			//partition right-side content with a row for realContent
+			real_cont_row=document.createElement("div");
+			real_cont_row.setAttribute("class", "row");
+
+			//give realContent space
+			real_cont_space=document.createElement("div");
+			real_cont_space.setAttribute("class", "col-md-12");
+
+			//create content dive
 			content_div=document.createElement("div");
 			content_div.setAttribute("id", "realContent");
-			content_div.setAttribute("class", "col-md-12 table-responsive");
+			content_div.setAttribute("class", "table-responsive");
 
-			side_col_row.appendChild(content_div);
-			side_col.appendChild(side_col_row);
-			row_div.appendChild(side_col);
+			real_cont_space.appendChild(content_div);
+			real_cont_row.appendChild(real_cont_space);
+
+			right_side.appendChild(real_cont_row);
+			major_row.appendChild(right_side);
+
+			container.appendChild(major_row);
 			
-			document.body.appendChild(row_div);
+			document.body.appendChild(container);
 		}//createPage()
