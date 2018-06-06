@@ -8,6 +8,11 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    height: 100%;
+}
+
+.full_height{
+    height: 100%;
 }
 
 p {

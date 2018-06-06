@@ -6,9 +6,14 @@ aData={
                 }
 }
 
-aLinks=[[function(){alert(1)}, function(){alert(2)}],
-        [function(){alert(3)}, function(){alert(4)}],
-        [function(){alert(5)}, function(){alert(6)}],
-        [function(){alert(7)}, function(){alert(8)}]
-        [function(){alert(9)}, function(){alert(10)}]];
+function showJournal(){
+        var journal=createJournal(tData);
+        div=document.getElementById("realContent");
+        div.innerHTML="";
+        div.appendChild(journal);
+}
+
+aLinks=[[showJournal,showJournal],[showJournal,showJournal],
+        [showJournal,showJournal],[showJournal,showJournal],
+        [showJournal,showJournal]];
 

@@ -1,19 +1,20 @@
 		function createPage(data){
 			//create a container for page content
 			container=document.createElement("div");
-			container.setAttribute("class", "container-fluid");
+			container.setAttribute("class", "container-fluid full_height");
 
 			//create a singel major row
 			major_row=document.createElement("div");
-			major_row.setAttribute("class", "row");
+			major_row.setAttribute("class", "row full_height");
 
 			//partition row for a sidebar
 			sidebar_space=document.createElement("div");
-			sidebar_space.setAttribute("class", "col-md-3");
+			sidebar_space.setAttribute("class", "col-md-3 full_height");
 
 			//create the sidebar
 			sidebar_ele=document.createElement("nav");
 			sidebar_ele.setAttribute("id", "sidebar");
+			sidebar_ele.setAttribute("class", "full_height");
 			sidebar_head=document.createElement("div");
 			sidebar_head.setAttribute("class", "sidebar-header");
 			user_div=document.createElement("div");
@@ -50,6 +51,7 @@
 	
 			//sidebar menu
 			head_list=document.createElement("ul");
+			head_list.setAttribute("id", "head_list");
 			head_list_class=document.createAttribute("class");
 			head_list.setAttributeNode(head_list_class);
 			head_list.setAttribute("class", "list-unstyled components");
@@ -61,6 +63,7 @@
 				head_item_a.setAttribute("data-toggle", "collapse");
 				head_item_a.setAttribute("data-target", "#options"+i);
 				head_item_a.setAttribute("aria-expanded", "false");
+				head_item_a.addEventListener("click", closeHeadListItems);
 				head_item_b=document.createElement("b");
 				head_item_name=document.createTextNode(Object.keys(data["sidebar"]["menu"][i]));
 				head_item_b.appendChild(head_item_name);
@@ -77,7 +80,7 @@
 					sub_item=document.createElement("li");
 					sub_item_a=document.createElement("a");
 					sub_item_a.setAttribute("href", "#");
-					sub_item_a.addEventListener("click", function(){aLinks[i][j]()});//added line
+					//sub_item_a.addEventListener("click", aLinks[i][j]);//added line
 					sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name.data][j]);
 					sub_item_a.appendChild(sub_item_name);
 					sub_item.appendChild(sub_item_a);
@@ -118,3 +121,16 @@
 			
 			document.body.appendChild(container);
 		}//createPage()
+
+
+		function closeHeadListItems(){
+			var selected_option_list=this.getAttribute("data-target");
+			var head_item_a=document.querySelectorAll("#head_list>li>a");
+			head_item_a.forEach(function(a){
+				if(this!=a){
+					$(a.getAttribute("data-target")).collapse("hide");
+				}//if
+			});
+			//var i=0;
+			//for(i=0;i<head_item_a.length;i++)
+		}//function
