@@ -1,0 +1,3 @@
+function renderPage(data){
+    
+}//renderPage()

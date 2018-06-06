@@ -53,58 +53,33 @@ function createJournal(data){
         //account type
         journal_body_row_cell=document.createElement("td");
         //account type select
-        acc_type_select=document.createElement("select");
+        acc_type_select=createSelect(acc_type_list);
         addAtrribute(acc_type_select, {"id":id, "style":"width:180px;"});
         acc_type_select.addEventListener("change", function(){getSubList(this, data)});
         id++;
-        select_option=document.createElement("option");
-        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
-        select_option_text=document.createTextNode(" -- select an option -- ");
-        select_option.appendChild(select_option_text);
-        acc_type_select.appendChild(select_option);
-        var account_index;
-        for(account_index=0; account_index<acc_type_list.length; account_index++){
-            select_option=document.createElement("option");
-            select_option.setAttribute("value", acc_type_list[account_index]);
-            select_option_text=document.createTextNode(acc_type_list[account_index]);
-            select_option.appendChild(select_option_text);
-            acc_type_select.appendChild(select_option);
-        }//for
-        
+
         journal_body_row_cell.appendChild(acc_type_select);
         journal_body_row.appendChild(journal_body_row_cell);
         
         //account subtype
         journal_body_row_cell=document.createElement("td");
         //account subtype select
-        acc_subtype_select=document.createElement("select");
+        acc_subtype_select=createSelect(null);
         addAtrribute(acc_subtype_select, {"id":id, "style":"width:180px;"});
         acc_subtype_select.addEventListener("change", function(){getAccList(this, data)});
         id++;
-        
-        select_option=document.createElement("option");
-        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
-        select_option_text=document.createTextNode(" -- select an option -- ");
-        select_option.appendChild(select_option_text);
-        acc_subtype_select.appendChild(select_option);
-        
+     
         journal_body_row_cell.appendChild(acc_subtype_select);
         journal_body_row.appendChild(journal_body_row_cell);
 
         //accounts
         journal_body_row_cell=document.createElement("td");
         //account subtype select
-        acc_select=document.createElement("select");
+        acc_select=createSelect(null);
         addAtrribute(acc_select, {"id":id, "style":"width:180px;"});
         acc_select.addEventListener("change", function(){getAccNum(this, data)});
         id++;
-        
-        select_option=document.createElement("option");
-        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
-        select_option_text=document.createTextNode(" -- select an option -- ");
-        select_option.appendChild(select_option_text);
-        acc_select.appendChild(select_option);
-
+    
         journal_body_row_cell.appendChild(acc_select);
         journal_body_row.appendChild(journal_body_row_cell);
         
@@ -147,13 +122,6 @@ function createJournal(data){
     return journal;
 
 }//createJournal
-
-function addAtrribute(ele, attrValList){
-    attrList=Object.keys(attrValList);
-    var i;
-    for(i=0; i<attrList.length; i++)
-        ele.setAttribute(attrList[i], attrValList[attrList[i]]);
-}//addAttribute()
 
 function clearOther(input){
     if(input.value!=""){
@@ -361,23 +329,10 @@ function create_row(journal, data) {
         //account type
         journal_body_row_cell=document.createElement("td");
         //account type select
-        acc_type_select=document.createElement("select");
+        acc_type_select=createSelect(acc_type_list);
         addAtrribute(acc_type_select, {"id":id, "style":"width:180px;"});
         acc_type_select.addEventListener("change", function(){getSubList(this, data)});
         id++;
-        select_option=document.createElement("option");
-        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
-        select_option_text=document.createTextNode(" -- select an option -- ");
-        select_option.appendChild(select_option_text);
-        acc_type_select.appendChild(select_option);
-        var account_index;
-        for(account_index=0; account_index<acc_type_list.length; account_index++){
-            select_option=document.createElement("option");
-            select_option.setAttribute("value", acc_type_list[account_index]);
-            select_option_text=document.createTextNode(acc_type_list[account_index]);
-            select_option.appendChild(select_option_text);
-            acc_type_select.appendChild(select_option);
-        }//for
         
         journal_body_row_cell.appendChild(acc_type_select);
         journal_body_row.appendChild(journal_body_row_cell);
@@ -385,16 +340,10 @@ function create_row(journal, data) {
         //account subtype
         journal_body_row_cell=document.createElement("td");
         //account subtype select
-        acc_subtype_select=document.createElement("select");
+        acc_subtype_select=createSelect(null);
         addAtrribute(acc_subtype_select, {"id":id, "style":"width:180px;"});
         acc_subtype_select.addEventListener("change", function(){getAccList(this, data)});
         id++;
-        
-        select_option=document.createElement("option");
-        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
-        select_option_text=document.createTextNode(" -- select an option -- ");
-        select_option.appendChild(select_option_text);
-        acc_subtype_select.appendChild(select_option);
         
         journal_body_row_cell.appendChild(acc_subtype_select);
         journal_body_row.appendChild(journal_body_row_cell);
@@ -402,17 +351,11 @@ function create_row(journal, data) {
         //accounts
         journal_body_row_cell=document.createElement("td");
         //account subtype select
-        acc_select=document.createElement("select");
+        acc_select=createSelect(null);
         addAtrribute(acc_select, {"id":id, "style":"width:180px;"});
         acc_select.addEventListener("change", function(){getAccNum(this, data)});
         id++;
         
-        select_option=document.createElement("option");
-        addAtrribute(select_option, {"disabled":true, "selected":true, "value":true});
-        select_option_text=document.createTextNode(" -- select an option -- ");
-        select_option.appendChild(select_option_text);
-        acc_select.appendChild(select_option);
-
         journal_body_row_cell.appendChild(acc_select);
         journal_body_row.appendChild(journal_body_row_cell);
         

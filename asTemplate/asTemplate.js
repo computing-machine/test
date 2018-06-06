@@ -77,7 +77,7 @@
 					sub_item=document.createElement("li");
 					sub_item_a=document.createElement("a");
 					sub_item_a.setAttribute("href", "#");
-					sub_item_a.addEventListener("click", function(){aLinks[0][0]()});//added line
+					sub_item_a.addEventListener("click", function(){aLinks[i][j]()});//added line
 					sub_item_name=document.createTextNode(data["sidebar"]["menu"][i][head_item_name.data][j]);
 					sub_item_a.appendChild(sub_item_name);
 					sub_item.appendChild(sub_item_a);
