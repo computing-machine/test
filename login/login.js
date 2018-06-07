@@ -19,7 +19,7 @@ function createLogInPage() {
     panel_head_div.appendChild(panel_title_div);
     panel_body_div = document.createElement("div");
     panel_body_div.setAttribute("class", "panel-body");
-    form_ele = document.createElement("form");
+    form_ele = document.createElement("form");//form creation
     form_ele.setAttribute("id", "form");
     form_ele.setAttribute("name", "form");
     form_ele.setAttribute("class", "form-horizontal");

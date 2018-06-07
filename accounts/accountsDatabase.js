@@ -13,7 +13,12 @@ function showJournal(){
         div.appendChild(journal);
 }
 
-aLinks=[[showJournal,showJournal],[showJournal,showJournal],
-        [showJournal,showJournal],[showJournal,showJournal],
-        [showJournal,showJournal]];
+aLinks=[[
+        function(){
+                var journal=createJournal(tData);
+                div=document.getElementById("realContent");
+                div.innerHTML="";
+                div.appendChild(journal);
+        }
+]];
 
