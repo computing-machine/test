@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Collapsible sidebar using Bootstrap 3</title>
+
+         <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="library/bootstrap-3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+    <body>
+
+        <div class="container-fluid">
+            <!-- Sidebar Holder -->
+            <div class="row">
+                <div id="sidebar_space" class="col-md-3">
+                    <nav id="sidebar">
+                        <div class="sidebar-header">
+                            <h3>Stock</h3>
+                        </div>
+
+                        <ul class="list-unstyled components">
+                            <li>
+                                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Lines</a>
+                                <ul class="collapse list-unstyled" id="homeSubmenu">
+                                    <li><a href="#" id="orderTable">Line1</a></li>
+                                    <li><a href="#">Line2</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                                <ul class="collapse list-unstyled" id="pageSubmenu">
+                                    <li><a href="#">Page 1</a></li>
+                                    <li><a href="#">Page 2</a></li>
+                                    <li><a href="#">Page 3</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Portfolio</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                    <!-- Page Content Holder -->
+                <div id="content" class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav class="navbar navbar-default">
+                                <div class="container-fluid">
+
+                                    <div class="navbar-header">
+                                        <button type="button" id="sidebarCollapse" class="navbar-btn">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li><a href="#">Page</a></li>
+                                            <li><a href="#">Page</a></li>
+                                            <li><a href="#">Page</a></li>
+                                            <li><a href="#">Page</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="component_area"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- jQuery CDN -->
+         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+         <!-- Bootstrap Js CDN -->
+         <script src="library/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+         <script src="library/angular-1.6.9/angular.js"></script>
+         <script src="myApp.js"></script>
+
+         <!-- Bootstrap Js CDN -->
+        <script src="utility.js"></script>
+        <script src="orderData.js"></script>
+        <script src="table.js"></script>
+         <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                    $(this).toggleClass('active');
+                });
+            });
+
+            b=document.getElementById("orderTable");
+            b.addEventListener("click", showOrderTable);
+
+            function showOrderTable(){
+                table=createTable({"class":"table table-hover"},orderData);
+                div=document.getElementById("component_area");
+                div.innerHTML="";
+                div.appendChild(table);
+            }//function
+        </script>
+    </body>
+</html>
